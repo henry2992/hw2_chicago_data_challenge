@@ -1,12 +1,12 @@
 require_relative "program"
 require "minitest/autorun"
  
-class TestSimpleNumber < Test::Unit::TestCase
+class TestCorrelation < MiniTest::Unit::TestCase 
  
   def test_simple
 
 
-    assert_equal(test_correlation)
+    assert_equal(4, Correlation.new.test_correlation(1,1,1,1,1,1))
   
   end
  

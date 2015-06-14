@@ -6,12 +6,12 @@ require 'pp'
 		end
 
 		def test_correlation(x,y,xy,x2,y2,n)
-		 correlation = ((n*(xy)) - (x * y)) / Math.sqrt( (  (n * x2) - (x * x)) * ((n * y2) - (y * y)) )
-		 return correlation
+		 correlation = (( n *(xy)) - (x * y)) / Math.sqrt( (  (n * x2) - (x * x)) * ((n * y2) - (y * y)) )
+		 return correlation.to_f
 		end			
 	end	
 
-		
+
 	$crimes = []
 	$relation = {}
 
@@ -53,8 +53,8 @@ require 'pp'
 
 	crime_parser
 
-	total_crime = 0 
-
+	def crime_sum
+		total_crime = 0 
 
 		$relation.each do |key, value|
 			value.each do |y|	
@@ -122,86 +122,90 @@ require 'pp'
 			$relation[key].delete("INTIMIDATION")
 			$relation[key].delete("MOTOR VEHICLE THEFT")
 			$relation[key].delete("ASSAULT")
+			$relation[key].delete("Primary Type")
 			
 			total_crime = 0
 
 		end
-		
+	end
+	
+	crime_sum
 
-	# puts $relation[3]
 
-	total_crime
+	def relation_test
+		$sum_education = []
+		$sum_income = []
+		$sum_crime = []
 
-		sum_education = []
-		sum_income = []
-		sum_crime = []
+		$sum_crime_income = []
+		$sum_crime_edu = []
+		$sum_edu_income = []
 
-		sum_crime_income = []
-		sum_crime_edu = []
-		sum_edu_income = []
-
-		income_2 = []
-		crime_2 = []
-		education_2 = []
+		$income_2 = []
+		$crime_2 = []
+		$education_2 = []
 
 		$relation.each do |x, y|
 
-			sum_education << y[1].to_f
-			sum_income << y[2]	
-			sum_crime << y[3]
+			$sum_education << y[1].to_f
+			$sum_income << y[2]	
+			$sum_crime << y[3]
 
-			sum_crime_edu << y[1].to_f * y[3].to_f
-			sum_edu_income << y[1].to_f *  y[2].to_i 
-			sum_crime_income << y[2].to_i * y[3].to_i
+			$sum_crime_edu << y[1].to_f * y[3].to_f
+			$sum_edu_income << y[1].to_f *  y[2].to_i 
+			$sum_crime_income << y[2].to_i * y[3].to_i
 
-			education_2 << y[1].to_f * y[1].to_f
-			income_2 << y[2].to_i * y[2].to_i
-			crime_2 << y[3].to_i * y[3].to_i
-
+			$education_2 << y[1].to_f * y[1].to_f
+			$income_2 << y[2].to_i * y[2].to_i
+			$crime_2 << y[3].to_i * y[3].to_i
 		end
 
-		sum_income.shift
-		sum_crime.shift
-		sum_education.shift
+		$sum_income.shift
+		$sum_crime.shift
+		$sum_education.shift
 
-		sum_edu_income.shift
-		sum_crime_edu.shift
-		sum_crime_income.shift
+		$sum_edu_income.shift
+		$sum_crime_edu.shift
+		$sum_crime_income.shift
 
-		education_2.shift
-		income_2.shift
-		crime_2.shift
+		$education_2.shift
+		$income_2.shift
+		$crime_2.shift
 
-	# SUM ALL #
+		# SUM ALL #
 
-		education_total = sum_education.inject(:+)
-		income_total = sum_income.inject(:+)
-		crime_total =  sum_crime.inject(:+)
+		$education_total = $sum_education.inject(:+)
+		$income_total = $sum_income.inject(:+)
+		$crime_total =  $sum_crime.inject(:+)
 
-		edu_income_total = sum_edu_income.inject(:+)
-		crime_edu_total = sum_crime_edu.inject(:+)
-		crime_income_total = sum_crime_income.inject(:+)
+		$edu_income_total = $sum_edu_income.inject(:+)
+		$crime_edu_total = $sum_crime_edu.inject(:+)
+		$crime_income_total = $sum_crime_income.inject(:+)
 
-		education_times_2 = education_2.inject(:+)
-		income_times_2 = income_2.inject(:+)
-		crime_times_2 = crime_2.inject(:+)
+		$education_times_2 = $education_2.inject(:+)
+		$income_times_2 = $income_2.inject(:+)
+		$crime_times_2 = $crime_2.inject(:+)
 
-
-		numsize = sum_income.size
 		
-	
+	end
 
+	relation_test
+		
+
+		
+
+	numsize = $sum_income.size
+		
 	y1 = Correlation.new 
+
+
 	
-	puts y1.test_correlation(income_total, crime_total, crime_income_total, income_times_2 , crime_times_2, numsize)
+	puts y1.test_correlation($income_total, $crime_total, $crime_income_total, $income_times_2 , $crime_times_2, numsize)
 
+	$relation[0][1]= "PERCENT AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
+	$relation[0][2] = "PER CAPITA INCOME"
+	$relation[0][3] = "TOTAL NUMBER OF CRIMES"
 
-
-	# puts test_correlation(income_total, crime_total, crime_income_total, income_times_2 , crime_times_2, numsize )
-
-	# puts test_correlation(education_total, crime_total, crime_edu_total, education_times_2 , crime_times_2, numsize )
-
-	# puts test_correlation(education_total, income_total, edu_income_total, education_times_2 , income_times_2, numsize )
 	pp $relation
 	
 

@@ -2,7 +2,6 @@ require 'csv'
 require 'pp'
 	
 	class Correlation 
-
 		def initialize	
 		end
 
@@ -12,45 +11,52 @@ require 'pp'
 		end			
 	end	
 
+		
+	$crimes = []
+	$relation = {}
+
+	def census_reader(file)
 		eco_index = 0
-		crime_index = 0
-		relation = {}
-
-
-		CSV.foreach("census.csv") do |line| 
+		CSV.foreach(file) do |line| 
 		  eco_index_total = eco_index
-		  relation [eco_index] = [line[1].strip.to_s, line[5].to_i, line[7].to_i]
+		  $relation[eco_index] = [line[1].strip.to_s, line[5].to_i, line[7].to_i]
 		  eco_index +=  1
-		end
-
-
-		crimes = []
-		CSV.foreach("crimes.csv") do |line| 
+		end	
+	end
+	
+	def crimes_reader(file)
+		crime_index = 0
+		CSV.foreach(file) do |line| 
 		  crime_index_total = crime_index
-		  crimes[crime_index] = [line[13].to_i, line[5].strip.to_s]
+		  $crimes[crime_index] = [line[13].to_i, line[5].strip.to_s]
 		  crime_index +=  1
 		end
-    
+	end
+		
+    census_reader('census.csv')	
+    crimes_reader('crimes.csv')
 
+
+	def crime_parser
 		counter = 0
 		nb = 79
-		max_count = []
-
-
-			
-		crimes.each do |key, value|
+		$crimes.each do |key, value|
 			while counter < nb do 
 					if key.to_f == counter
-						relation[counter] << value
+						$relation[counter] << value
 					end
 				counter += 1
 			end
 			counter = 0
 		end 
+	end	
 
-		total_crime = 0 
+	crime_parser
 
-		relation.each do |key, value|
+	total_crime = 0 
+
+
+		$relation.each do |key, value|
 			value.each do |y|	
 				if y.to_s.include? "THEFT"
 					total_crime += 1
@@ -99,27 +105,32 @@ require 'pp'
 				end
 			end
 
-			relation[key] << total_crime
+			$relation[key] << total_crime
 
-			relation[key].delete("THEFT")
-			relation[key].delete("OFFENSE INVOLVING CHILDREN")
-			relation[key].delete("OTHER OFFENSE")
-			relation[key].delete("CRIM SEXUAL ASSAULT")
-			relation[key].delete("CRIMINAL DAMAGE")
-			relation[key].delete("DECEPTIVE PRACTICE")
-			relation[key].delete("BURGLARY")
-			relation[key].delete("NARCOTICS")
-			relation[key].delete("SEX OFFENSE")
-			relation[key].delete("WEAPONS VIOLATION")
-			relation[key].delete("BATTERY")
-			relation[key].delete("ROBBERY")
-			relation[key].delete("INTIMIDATION")
-			relation[key].delete("MOTOR VEHICLE THEFT")
-			relation[key].delete("ASSAULT")
+			$relation[key].delete("THEFT")
+			$relation[key].delete("OFFENSE INVOLVING CHILDREN")
+			$relation[key].delete("OTHER OFFENSE")
+			$relation[key].delete("CRIM SEXUAL ASSAULT")
+			$relation[key].delete("CRIMINAL DAMAGE")
+			$relation[key].delete("DECEPTIVE PRACTICE")
+			$relation[key].delete("BURGLARY")
+			$relation[key].delete("NARCOTICS")
+			$relation[key].delete("SEX OFFENSE")
+			$relation[key].delete("WEAPONS VIOLATION")
+			$relation[key].delete("BATTERY")
+			$relation[key].delete("ROBBERY")
+			$relation[key].delete("INTIMIDATION")
+			$relation[key].delete("MOTOR VEHICLE THEFT")
+			$relation[key].delete("ASSAULT")
 			
 			total_crime = 0
 
 		end
+		
+
+	# puts $relation[3]
+
+	total_crime
 
 		sum_education = []
 		sum_income = []
@@ -133,7 +144,7 @@ require 'pp'
 		crime_2 = []
 		education_2 = []
 
-		relation.each do |x, y|
+		$relation.each do |x, y|
 
 			sum_education << y[1].to_f
 			sum_income << y[2]	
@@ -191,8 +202,8 @@ require 'pp'
 	# puts test_correlation(education_total, crime_total, crime_edu_total, education_times_2 , crime_times_2, numsize )
 
 	# puts test_correlation(education_total, income_total, edu_income_total, education_times_2 , income_times_2, numsize )
-
-	# pp relation
+	pp $relation
+	
 
 
 	

@@ -11,30 +11,37 @@ require 'pp'
 		end			
 	end	
 
+	class Reader 
+		def initialize()	
+		end
+		
+		$relation = {}
+		$crimes = []
 
-	$crimes = []
-	$relation = {}
-
-	def census_reader(file)
-		eco_index = 0
-		CSV.foreach(file) do |line| 
-		  eco_index_total = eco_index
-		  $relation[eco_index] = [line[1].strip.to_s, line[5].to_f, line[7].to_i]
-		  eco_index +=  1
+		def census_reader(file)
+			eco_index = 0
+			CSV.foreach(file) do |line| 
+			   eco_index_total = eco_index
+			   $relation[eco_index] = [line[1].strip.to_s, line[5].to_f, line[7].to_i]
+			   eco_index +=  1
+			end	
+		end
+		
+		def crimes_reader(file)
+			crime_index = 0
+			CSV.foreach(file) do |line| 
+			  crime_index_total = crime_index
+			  $crimes[crime_index] = [line[13].to_i, line[5].strip.to_s]
+			  crime_index +=  1
+			end
 		end	
 	end
+
+	read_crime = Reader.new	
+	read_crime.crimes_reader('crimes.csv')
 	
-	def crimes_reader(file)
-		crime_index = 0
-		CSV.foreach(file) do |line| 
-		  crime_index_total = crime_index
-		  $crimes[crime_index] = [line[13].to_i, line[5].strip.to_s]
-		  crime_index +=  1
-		end
-	end
-		
-    census_reader('census.csv')	
-    crimes_reader('crimes.csv')
+	read_census = Reader.new	
+	read_census.census_reader('census.csv')
 
     $relation.delete(78)
 
@@ -195,18 +202,6 @@ require 'pp'
 
 	relation_test
 	
-		# puts $education_total 
-		# puts $income_total 
-		# puts $crime_total 
-
-		# # $edu_income_total 
-		# # $crime_edu_total
-		# puts $crime_income_total 
-
-		# # $education_times_2 
-		# puts $income_times_2
-		# puts $crime_times_2 
-	
 
 		
 
@@ -218,20 +213,23 @@ require 'pp'
 	
 	c1 = y1.test_correlation($income_total, $crime_total, $crime_income_total, $income_times_2 , $crime_times_2, numsize).round(5)
 
-	puts c1
+	c2 = y1.test_correlation($crime_total, $education_total, $crime_edu_total, $crime_times_2, $education_times_2, numsize).round(5)
+
+	puts c2
+
 
 	# puts $relation
 	# puts	$education_total  
 	# puts 	$income_total  
 	# puts 	$crime_total 
 
-	# # puts	$edu_income_total 
-	# # puts	$crime_edu_total 
+	# puts	$edu_income_total 
+	# puts	$crime_edu_total 
 	# puts $crime_income_total 
 
-	# # puts	$education_times_2 
-	# puts	$income_times_2 
-	# puts 	$crime_times_2
+	puts	$education_times_2 
+	puts	$income_times_2 
+	puts 	$crime_times_2
 	
 
 	# $relation[0][1]= "PERCENT AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"

@@ -19,7 +19,7 @@ require 'pp'
 		eco_index = 0
 		CSV.foreach(file) do |line| 
 		  eco_index_total = eco_index
-		  $relation[eco_index] = [line[1].strip.to_s, line[5].to_i, line[7].to_i]
+		  $relation[eco_index] = [line[1].strip.to_s, line[5].to_f, line[7].to_i]
 		  eco_index +=  1
 		end	
 	end
@@ -36,10 +36,12 @@ require 'pp'
     census_reader('census.csv')	
     crimes_reader('crimes.csv')
 
+    $relation.delete(78)
+
 
 	def crime_parser
 		counter = 0
-		nb = 79
+		nb = 78
 		$crimes.each do |key, value|
 			while counter < nb do 
 					if key.to_f == counter
@@ -126,7 +128,9 @@ require 'pp'
 			
 			total_crime = 0
 
+
 		end
+
 	end
 	
 	crime_sum
@@ -190,24 +194,54 @@ require 'pp'
 	end
 
 	relation_test
-		
+	
+		# puts $education_total 
+		# puts $income_total 
+		# puts $crime_total 
+
+		# # $edu_income_total 
+		# # $crime_edu_total
+		# puts $crime_income_total 
+
+		# # $education_times_2 
+		# puts $income_times_2
+		# puts $crime_times_2 
+	
 
 		
 
-	numsize = $sum_income.size
+	numsize = $sum_income.size 
 		
 	y1 = Correlation.new 
 
-
+    puts numsize
 	
-	puts y1.test_correlation($income_total, $crime_total, $crime_income_total, $income_times_2 , $crime_times_2, numsize)
+	c1 = y1.test_correlation($income_total, $crime_total, $crime_income_total, $income_times_2 , $crime_times_2, numsize).round(5)
 
-	$relation[0][1]= "PERCENT AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
-	$relation[0][2] = "PER CAPITA INCOME"
-	$relation[0][3] = "TOTAL NUMBER OF CRIMES"
+	puts c1
 
-	pp $relation
+	# puts $relation
+	# puts	$education_total  
+	# puts 	$income_total  
+	# puts 	$crime_total 
+
+	# # puts	$edu_income_total 
+	# # puts	$crime_edu_total 
+	# puts $crime_income_total 
+
+	# # puts	$education_times_2 
+	# puts	$income_times_2 
+	# puts 	$crime_times_2
 	
+
+	# $relation[0][1]= "PERCENT AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
+	# $relation[0][2] = "PER CAPITA INCOME"
+	# $relation[0][3] = "TOTAL NUMBER OF CRIMES"
+
+
+	# pp $relation
+
+
 
 
 	

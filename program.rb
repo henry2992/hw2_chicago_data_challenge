@@ -1,5 +1,8 @@
 require 'csv'
 require 'pp'
+require "awesome_print"
+
+
 	
 	class Correlation 
 		def initialize	
@@ -215,7 +218,7 @@ require 'pp'
 
 	c2 = y1.test_correlation($crime_total, $education_total, $crime_edu_total, $crime_times_2, $education_times_2, numsize).round(5)
 
-	puts c2
+	# puts c2
 
 
 	# puts $relation
@@ -227,17 +230,18 @@ require 'pp'
 	# puts	$crime_edu_total 
 	# puts $crime_income_total 
 
-	puts	$education_times_2 
-	puts	$income_times_2 
-	puts 	$crime_times_2
+	# puts	$education_times_2 
+	# puts	$income_times_2 
+	# puts 	$crime_times_2
 	
 
-	# $relation[0][1]= "PERCENT AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
-	# $relation[0][2] = "PER CAPITA INCOME"
-	# $relation[0][3] = "TOTAL NUMBER OF CRIMES"
+	$relation[0][1]= "PERCENT AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
+	$relation[0][2] = "PER CAPITA INCOME"
+	$relation[0][3] = "TOTAL NUMBER OF CRIMES"
+	
+	ap $relation[0], :sort_keys  => false, :index => false, :multiline  => false
 
 
-	# pp $relation
 
 
 

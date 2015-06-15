@@ -12,7 +12,7 @@ class TestCorrelation < MiniTest::Unit::TestCase
 
    # X * Y variables
 
-    $education_income = 286082.000000004
+    $education_income = 30286082.000000004
     $crime_education = 4620.300000000001
     $crime_income = 5585784
 
@@ -26,12 +26,6 @@ class TestCorrelation < MiniTest::Unit::TestCase
     $n = 77
 
 
-
-
-
-
-
-
   def test_simple
 
   	# Pearson Correlation between Income and Crime 
@@ -40,7 +34,9 @@ class TestCorrelation < MiniTest::Unit::TestCase
     # Pearson Correlation between and Crime and Education 
     assert_equal(0.09788679, Correlation.new.test_correlation( $crime , $education , $crime_education , $crime_2 , $education_2, $n).round(8))
   
-
+    # Pearson Correlation between and Income and Education 
+    assert_equal(-0.70977148, Correlation.new.test_correlation( $income , $education , $education_income  , $income_2 , $education_2, $n).round(8))
+  
   end
  
 end

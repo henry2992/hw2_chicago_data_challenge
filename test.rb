@@ -1,5 +1,6 @@
 require_relative "program"
 require "minitest/autorun"
+require 'csv'
  
 class TestCorrelation < MiniTest::Unit::TestCase 
  
@@ -25,8 +26,10 @@ class TestCorrelation < MiniTest::Unit::TestCase
    #Array size
     $n = 77
 
+    def test_correlations
 
-  def test_simple
+  	eco_index = 0
+
 
   	# Pearson Correlation between Income and Crime 
     assert_equal(0.02142766, Correlation.new.test_correlation( $income , $crime , $crime_income , $income_2 , $crime_2, $n).round(8))
@@ -37,6 +40,23 @@ class TestCorrelation < MiniTest::Unit::TestCase
     # Pearson Correlation between and Income and Education 
     assert_equal(-0.70977148, Correlation.new.test_correlation( $income , $education , $education_income  , $income_2 , $education_2, $n).round(8))
   
-  end
+	end
+
+	
+	
+
+	def test_files
+		assert( File.exist?("crimes.csv"))
+
+		assert( File.exist?("census.csv"))	
+
+		assert_equal( 203, Reader.new.crimes_reader('crimes.csv').length )
+		
+		assert_equal( 79, Reader.new.census_reader('census.csv').length)
+	end
+
+	
+	
+
  
 end

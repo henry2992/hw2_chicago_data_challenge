@@ -1,6 +1,6 @@
 require 'csv'
 require 'pp'
-require "awesome_print"
+require 'awesome_print'
 
 
 	
@@ -28,6 +28,7 @@ require "awesome_print"
 			   $relation[eco_index] = [line[1].strip.to_s, line[5].to_f, line[7].to_i]
 			   eco_index +=  1
 			end	
+			return $relation
 		end
 		
 		def crimes_reader(file)
@@ -37,6 +38,7 @@ require "awesome_print"
 			  $crimes[crime_index] = [line[13].to_i, line[5].strip.to_s]
 			  crime_index +=  1
 			end
+			return $crimes
 		end	
 	end
 
@@ -48,6 +50,11 @@ require "awesome_print"
 
     $relation.delete(78)
 
+    class FinalParser 
+    	def initialize()
+    		
+    	end
+    	
 
 	def crime_parser
 		counter = 0
@@ -63,7 +70,7 @@ require "awesome_print"
 		end 
 	end	
 
-	crime_parser
+	# crime_parser
 
 	def crime_sum
 		total_crime = 0 
@@ -143,7 +150,7 @@ require "awesome_print"
 
 	end
 	
-	crime_sum
+	# crime_sum
 
 
 	def relation_test
@@ -203,7 +210,15 @@ require "awesome_print"
 		
 	end
 
-	relation_test
+end
+
+		
+	test = FinalParser.new
+	test.crime_parser
+	test.crime_sum
+	test.relation_test
+
+	# relation_test
 	
 
 		
@@ -218,28 +233,24 @@ require "awesome_print"
 
 	c2 = y1.test_correlation($crime_total, $education_total, $crime_edu_total, $crime_times_2, $education_times_2, numsize).round(5)
 
-	# puts c2
 
-
-	# puts $relation
-	# puts	$education_total  
-	# puts 	$income_total  
-	# puts 	$crime_total 
-
-	# puts	$edu_income_total 
-	# puts	$crime_edu_total 
-	# puts $crime_income_total 
-
-	# puts	$education_times_2 
-	# puts	$income_times_2 
-	# puts 	$crime_times_2
 	
 
-	$relation[0][1]= "PERCENT AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
+	$relation[0][1]= "% AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
 	$relation[0][2] = "PER CAPITA INCOME"
 	$relation[0][3] = "TOTAL NUMBER OF CRIMES"
 	
-	ap $relation[0], :sort_keys  => false, :index => false, :multiline  => false
+		print_counter = 1
+		while print_counter < 78
+
+			ap "Neighborhood #{$relation[print_counter][0]}  Income #{$relation[print_counter][1]}" 
+
+			print_counter += 1 
+		
+		end
+	
+
+	
 
 
 

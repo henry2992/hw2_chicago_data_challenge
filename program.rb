@@ -243,9 +243,12 @@ end
 		print_counter = 1
 		while print_counter < 78
 
-			ap "Neighborhood #{$relation[print_counter][0]}  Income #{$relation[print_counter][1]}" 
+			ap "Neighborhood: #{$relation[print_counter][0]}"
+			ap  "Education: #{$relation[print_counter][1]}. Income: $#{$relation[print_counter][2]}. Total Crime: #{$relation[print_counter][3]}" 
 
 			print_counter += 1 
+
+			puts 
 		
 		end
 	

@@ -3,7 +3,7 @@ require 'pp'
 require 'awesome_print'
 
 
-	
+	# PEARSON CORRELATION TEST FUNCTION
 	class Correlation 
 		def initialize	
 		end
@@ -14,21 +14,22 @@ require 'awesome_print'
 		end			
 	end	
 
+	# CLASS READER. WILL READ 2 FILES
 	class Reader 
 		def initialize()	
 		end
 		
-		$relation = {}
+		$census = {} #
 		$crimes = []
 
 		def census_reader(file)
 			eco_index = 0
 			CSV.foreach(file) do |line| 
 			   eco_index_total = eco_index
-			   $relation[eco_index] = [line[1].strip.to_s, line[5].to_f, line[7].to_i]
+			   $census[eco_index] = [line[1].strip.to_s, line[5].to_f, line[7].to_i]
 			   eco_index +=  1
 			end	
-			return $relation
+			return $census
 		end
 		
 		def crimes_reader(file)
@@ -48,7 +49,7 @@ require 'awesome_print'
 	read_census = Reader.new	
 	read_census.census_reader('census.csv')
 
-    $relation.delete(78)
+    $census.delete(78)
 
     class FinalParser 
     	def initialize()
@@ -62,7 +63,7 @@ require 'awesome_print'
 		$crimes.each do |key, value|
 			while counter < nb do 
 					if key.to_f == counter
-						$relation[counter] << value
+						$census[counter] << value
 					end
 				counter += 1
 			end
@@ -75,7 +76,7 @@ require 'awesome_print'
 	def crime_sum
 		total_crime = 0 
 
-		$relation.each do |key, value|
+		$census.each do |key, value|
 			value.each do |y|	
 				if y.to_s.include? "THEFT"
 					total_crime += 1
@@ -124,24 +125,24 @@ require 'awesome_print'
 				end
 			end
 
-			$relation[key] << total_crime
+			$census[key] << total_crime
 
-			$relation[key].delete("THEFT")
-			$relation[key].delete("OFFENSE INVOLVING CHILDREN")
-			$relation[key].delete("OTHER OFFENSE")
-			$relation[key].delete("CRIM SEXUAL ASSAULT")
-			$relation[key].delete("CRIMINAL DAMAGE")
-			$relation[key].delete("DECEPTIVE PRACTICE")
-			$relation[key].delete("BURGLARY")
-			$relation[key].delete("NARCOTICS")
-			$relation[key].delete("SEX OFFENSE")
-			$relation[key].delete("WEAPONS VIOLATION")
-			$relation[key].delete("BATTERY")
-			$relation[key].delete("ROBBERY")
-			$relation[key].delete("INTIMIDATION")
-			$relation[key].delete("MOTOR VEHICLE THEFT")
-			$relation[key].delete("ASSAULT")
-			$relation[key].delete("Primary Type")
+			$census[key].delete("THEFT")
+			$census[key].delete("OFFENSE INVOLVING CHILDREN")
+			$census[key].delete("OTHER OFFENSE")
+			$census[key].delete("CRIM SEXUAL ASSAULT")
+			$census[key].delete("CRIMINAL DAMAGE")
+			$census[key].delete("DECEPTIVE PRACTICE")
+			$census[key].delete("BURGLARY")
+			$census[key].delete("NARCOTICS")
+			$census[key].delete("SEX OFFENSE")
+			$census[key].delete("WEAPONS VIOLATION")
+			$census[key].delete("BATTERY")
+			$census[key].delete("ROBBERY")
+			$census[key].delete("INTIMIDATION")
+			$census[key].delete("MOTOR VEHICLE THEFT")
+			$census[key].delete("ASSAULT")
+			$census[key].delete("Primary Type")
 			
 			total_crime = 0
 
@@ -166,7 +167,7 @@ require 'awesome_print'
 		$crime_2 = []
 		$education_2 = []
 
-		$relation.each do |x, y|
+		$census.each do |x, y|
 
 			$sum_education << y[1].to_f
 			$sum_income << y[2]	
@@ -236,15 +237,15 @@ end
 
 	
 
-	$relation[0][1]= "% AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
-	$relation[0][2] = "PER CAPITA INCOME"
-	$relation[0][3] = "TOTAL NUMBER OF CRIMES"
+	$census[0][1]= "% AGED 25+ WITHOUT HIGH SCHOOL DIPLOMA"
+	$census[0][2] = "PER CAPITA INCOME"
+	$census[0][3] = "TOTAL NUMBER OF CRIMES"
 	
 		print_counter = 1
 		while print_counter < 78
 
-			ap "Neighborhood: #{$relation[print_counter][0]}"
-			ap  "Education: #{$relation[print_counter][1]}. Income: $#{$relation[print_counter][2]}. Total Crime: #{$relation[print_counter][3]}" 
+			ap "Neighborhood: #{$census[print_counter][0]}"
+			ap  "Education: #{$census[print_counter][1]}. Income: $#{$census[print_counter][2]}. Total Crime: #{$census[print_counter][3]}" 
 
 			print_counter += 1 
 

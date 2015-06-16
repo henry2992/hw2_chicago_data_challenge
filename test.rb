@@ -55,6 +55,10 @@ class TestCorrelation < MiniTest::Unit::TestCase
 		assert_equal( 79, Reader.new.census_reader('census.csv').length)
 	end
 
+  def test_program
+    
+  end
+
 	
 	
 

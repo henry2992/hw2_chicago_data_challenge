@@ -25,42 +25,49 @@ class TestCorrelation < MiniTest::Unit::TestCase
 
    #Array size
     $n = 77
-
-    def test_correlations
-
-  	eco_index = 0
-
-
-  	# Pearson Correlation between Income and Crime 
-    assert_equal(0.02142766, Correlation.new.test_correlation( $income , $crime , $crime_income , $income_2 , $crime_2, $n).round(8))
   
-    # Pearson Correlation between and Crime and Education 
-    assert_equal(0.09788679, Correlation.new.test_correlation( $crime , $education , $crime_education , $crime_2 , $education_2, $n).round(8))
-  
-    # Pearson Correlation between and Income and Education 
-    assert_equal(-0.70977148, Correlation.new.test_correlation( $income , $education , $education_income  , $income_2 , $education_2, $n).round(8))
-  
-	end
-
-	
-	
-
-	def test_files
-		assert( File.exist?("crimes.csv"))
-
-		assert( File.exist?("census.csv"))	
-
-		assert_equal( 203, Reader.new.crimes_reader('crimes.csv').length )
-		
-		assert_equal( 79, Reader.new.census_reader('census.csv').length)
-	end
-
-  def test_program
-    
+  #TEST IF FILES ARE CORRECT
+  def test_files
+    #Test is Crimes and Census CSV FIles are in the folder
+    assert( File.exist?("crimes.csv"))
+    assert( File.exist?("census.csv"))  
+    #Test if the code is reading all the lines within a file
+    assert_equal( 203, Reader.new.crimes_reader('crimes.csv').length )
+    assert_equal( 78, Reader.new.census_reader('census.csv').length)
   end
 
-	
-	
 
- 
+
+  #TEST IF VARIABLES ARE CORRECT  
+  def test_variables  
+    assert_equal($education , $education_total )
+    assert_equal($income , $income_total)
+    assert_equal($crime , $crime_total)
+    assert_equal($education_income  , $edu_income_total )
+    assert_equal($crime_education, $crime_edu_total)
+    assert_equal($crime_income , $crime_income_total)
+    assert_equal($education_2 , $education_2_total)
+    assert_equal($income_2 , $income_2_total)
+    assert_equal($crime_2 , $crime_2_total)
+  end
+
+  #TEST IF PEARSON CORRELATION ARE CORRECT
+  def test_correlations
+
+  	# Pearson Correlation between Income and Crime 
+    assert_equal(0.02142766, Correlation.new.test_correlation( $income_total , $crime_total, $crime_income_total, $income_2_total , $crime_2_total, $n).round(8))
+  
+    # Pearson Correlation between and Crime and Education 
+    assert_equal(0.09788679, Correlation.new.test_correlation( $crime_total, $education_total  , $crime_edu_total , $crime_2_total, $education_2_total, $n).round(8))
+  
+    # Pearson Correlation between and Income and Education 
+    assert_equal(-0.70977148, Correlation.new.test_correlation( $income_total , $education_total ,  $edu_income_total   , $income_2_total , $education_2_total, $n).round(8))
+  end
 end
+
+
+
+
+
+
+

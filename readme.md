@@ -1,7 +1,7 @@
 								WELCOME TO THE CHICAGO DATA CHALLENGE README
 
-Author: Henry Remache
-Project: Chicago Challenge
+Author: Henry Remache.
+Project: Chicago Challenge.
 
 Information:
 
@@ -38,7 +38,7 @@ Project Descripction:
 		Class: VARIABLES
 			functions:
 
-			add_crimes_to_census = This fucntions iterates throught the crimes array and moves all the crimes by Neighborhood into the hash table.
+			add_crimes_to_census = This function iterates throught the crimes array and moves all the crimes by Neighborhood into the hash table.
 
 			find_total_crime = This function find occurences of crimes and it adds everything up for each Neighborhood. Finding the total number of crimes in each area. And then if deletes all the crimes in the hash table.
 
@@ -56,9 +56,9 @@ Project Descripction:
 
 		 test_files = It runs 4 test. The first two assures that the CSV files crimes and census exits in the folder. The other two test will assure that all the lines in the files are being read.
 
-		 test_variables = This tests assures that all the variables returned in the Class Variables are correct.
+		 test_variables = This tests assures that all the variables returned in the Class Variables are correct. ( 9 tests)
 
-		 test_correlations = Test is the Pearson Correlation Results are correct.
+		 test_correlations = Test is the Pearson Correlation Results are correct. (3 tests)
 
 
 Results:

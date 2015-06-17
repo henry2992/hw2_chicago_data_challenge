@@ -204,11 +204,14 @@ require 'awesome_print'
 			# While loop to print all the items in Hash		
 			counter = 1
 			puts
-			puts "The following program reads information on crime and census in the city of Chicago"
+			puts "The following program reads information on crime and census in the city of Chicago.\nIt adds all the crime in the Neighborhoods in the last 5 years and analizes the relation between three key variables:"
+			puts "1) Crime"
+			puts "2) Education"
+			puts "3) Income"
+			puts
 			while counter < 78
-
 				ap "Neighborhood: #{$census[counter][0]}"
-				ap  "Education: #{$census[counter][1]}. Income: $#{$census[counter][2]}. Total Crime: #{$census[counter][3]}" 
+				ap  "Without HighSchool Education: #{$census[counter][1]}%. Income: $#{$census[counter][2]}. Total Crime: #{$census[counter][3]}"
 				counter += 1 
 				puts #Print Space
 			end
@@ -222,7 +225,7 @@ require 'awesome_print'
 		end
 
 		def test_correlation(x,y,xy,x2,y2,n)
-		 correlation = (( n *(xy)) - (x * y)) / Math.sqrt( (  (n * x2) - (x * x)) * ((n * y2) - (y * y)) )
+		 correlation = (( n * (xy)) - (x * y)) / Math.sqrt( (  (n * x2) - (x * x)) * ((n * y2) - (y * y)) )
 		 return correlation.to_f
 		end			
 	end	
@@ -240,17 +243,24 @@ require 'awesome_print'
 	variables.get_relation_variables
 	# Print
 	variables.printer
-
-
 	numsize = 77
 		
-	y1 = Correlation.new 
+	correlation1 = Correlation.new 
 
-	
-	puts c1 = y1.test_correlation($income_total, $crime_total, $crime_income_total, $income_2_total, $crime_2_total, numsize).round(5)
-
-	puts c2 = y1.test_correlation($crime_total, $education_total, $crime_edu_total, $crime_2_total , $education_2_total, numsize).round(5)
-
+	puts "RESULTS:"
+	puts "To find a correlation between Crimes, Education and Income I have run a Pearson Correlation Test between the 3 variables\n" + "These are the findings:"
+	puts
+	puts "Correlation between: Income and Crime:"
+	puts c1 = correlation1.test_correlation($income_total, $crime_total, $crime_income_total, $income_2_total, $crime_2_total, numsize).round(5)
+	puts "The Correlation between Income and Crime is low. This means that the income of a certain Neighborhood does not increase crime."
+	puts
+	puts "Correlation between: Education and Crime:"
+	puts c2 = correlation1.test_correlation($crime_total, $education_total, $crime_edu_total, $crime_2_total , $education_2_total, numsize).round(5)
+	puts "The Correlation between Education and Crime is low. This means that the level of education is not a factor to increase crime in a certain Neighborhood." 
+	puts
+	puts "Correlation between: Education and Income:"
+	puts c3 = correlation1.test_correlation($income_total, $education_total, $edu_income_total, $income_2_total, $education_2_total, numsize).round(5)
+	puts "The Correlation between Education and Income is high. Meaning that the less education a person has the less income they perceive and viceversa.\n" "The result is negative since we are using the percetage of people without High School Education in a Neighborhood, so the less people a Neighborhood has without High School Education the income is higher."
 
 
 
